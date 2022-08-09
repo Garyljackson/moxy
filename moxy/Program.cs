@@ -19,7 +19,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.MapGet("/_/purge", async (IOutputCacheStore cache, CancellationToken ct) =>
+app.MapPost("/_/purge", async (IOutputCacheStore cache, CancellationToken ct) =>
 {
     await cache.EvictByTagAsync("*", ct);
 }).CacheOutput(policyBuilder => policyBuilder.NoCache());
