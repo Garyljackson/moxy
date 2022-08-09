@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.OutputCaching;
+using moxy.CustomPolicies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddReverseProxy()
 builder.Services.AddOutputCache(options =>
 {
     options.AddBasePolicy(policyBuilder => policyBuilder
+        .AddPolicy<CacheEverythingPolicy>()
         .With(c => c.HttpContext.Request.Path.StartsWithSegments(""))
         .Tag("*")
         .Expire(TimeSpan.FromMinutes(10)));
